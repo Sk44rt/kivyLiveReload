@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.lang import Builder
 import os
+from sys import platform
 
 kv = Builder.load_string("""
 #:import KivyLexer kivy.extras.highlight.KivyLexer
@@ -26,9 +27,9 @@ class app(App):
                 file.write(text)
                 file.close()
         except Exception as e:
-            try:
+            if platform == "linux" or platform == "linux2" or platform == "darwin":
                 os.system("clear")
-            except: # OS == Windows
+            elif platform == "win32":
                 os.system("cls")
             print(e)
     def build(self):
