@@ -1,2 +1,4 @@
 Requirements: 
-  Kivy==2.0.0rc3
+  Kivy version 2 and upper
+
+Example of kv editor
