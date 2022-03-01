@@ -1,38 +1,44 @@
 from kivy.app import App
 from kivy.lang import Builder
-import os
-from sys import platform
 
-kv = Builder.load_string("""
+# .kv of main_window
+main_window = Builder.load_string("""
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 
 BoxLayout:
     orientation: "horizontal"
     CodeInput:
+        id: kv_code
         style_name: "native"
         lexer: KivyLexer()
-        id: kv_code
         on_text: app.update(text=self.text)
     BoxLayout:
         id: view_space
         size_hint_x: 0.6
 """)
 
+# kivy app class
 class app(App):
     def update(self, text):
-        try:
-            kv.ids.view_space.clear_widgets()
-            kv.ids.view_space.add_widget(Builder.load_string(text))
-            with open("saved_kv.kv", "w") as file:
-                file.write(text)
-                file.close()
-        except Exception as e:
-            if platform == "linux" or platform == "linux2" or platform == "darwin":
-                os.system("clear")
-            elif platform == "win32":
-                os.system("cls")
-            print(e)
-    def build(self):
-        return kv
+        try: # .kv is correct
+            self.widget = Builder.load_string(text)
+        except: # else don't load
+            pass
 
+        # load correct .kv
+        kv.ids.view_space.clear_widgets()
+        kv.ids.view_space.add_widget(self.widget)
+
+        # save correct .kv
+        with open("correct.kv", "w") as file:
+            file.write(text)
+            file.close()
+
+    # kivy main function
+    def build(self):
+        self.widget = Builder.load_string("BoxLayout:")
+
+        return main_window
+
+# kivy run
 app().run()
