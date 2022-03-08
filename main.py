@@ -26,8 +26,8 @@ class app(App):
             pass
 
         # load correct .kv
-        kv.ids.view_space.clear_widgets()
-        kv.ids.view_space.add_widget(self.widget)
+        main_window.ids.view_space.clear_widgets()
+        main_window.ids.view_space.add_widget(self.widget)
 
         # save correct .kv
         with open("correct.kv", "w") as file:
