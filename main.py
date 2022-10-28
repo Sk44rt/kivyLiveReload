@@ -20,6 +20,8 @@ BoxLayout:
 # kivy app class
 class app(App):
     def update(self, text):
+        if len(text) == 0: # .kv is empty
+            return
         try: # .kv is correct
             self.widget = Builder.load_string(text)
         except: # else don't load
