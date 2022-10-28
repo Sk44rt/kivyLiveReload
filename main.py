@@ -29,7 +29,10 @@ class app(App):
 
         # load correct .kv
         main_window.ids.view_space.clear_widgets()
-        main_window.ids.view_space.add_widget(self.widget)
+        try:
+            main_window.ids.view_space.add_widget(self.widget)
+        except:
+            return
 
         # save correct .kv
         with open("correct.kv", "w") as file:
